@@ -91,7 +91,7 @@ The project is deployed to GitHub Pages whenever a commit is pushed to `main`. A
 
 https://gowdavikitha886-hue.github.io/Blogging-platform/
 
-The deployment workflow is in `.github/workflows/deploy.yml`. GitHub Pages must use **GitHub Actions** as its build and deployment source (in **Settings → Pages**) if it is not configured automatically on the first run.
+The deployment workflow is in `.github/workflows/deploy.yml`. Before the first deployment, a repository owner must enable Pages in [Settings → Pages](https://github.com/gowdavikitha886-hue/Blogging-platform/settings/pages) and set **Build and deployment → Source** to **GitHub Actions**. Then rerun **Deploy to GitHub Pages** from the repository's Actions tab, or push a new commit.
 
 ---
 
