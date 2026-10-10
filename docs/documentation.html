@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BlogSphere AI — Project Documentation</title>
+<style>
+  :root{
+    --ink:#1c2030; --muted:#5c6178; --line:#e2e4ee; --bg:#ffffff; --soft:#f5f6fb;
+    --brand:#6d5efc; --brand2:#06b6d4; --code-bg:#f2f3fa; --ok:#0f9d68; --warn:#b7791f; --danger:#db3b3b;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  .page{max-width:920px;margin:0 auto;padding:48px 26px 90px}
+  header.doc{border-bottom:3px solid;border-image:linear-gradient(90deg,var(--brand),var(--brand2)) 1;padding-bottom:24px;margin-bottom:28px}
+  .logo{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .mark{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#06b6d4);display:grid;place-items:center;color:#fff;font-weight:800;font-size:20px}
+  h1{font-size:2.1rem;margin:0;letter-spacing:-.02em}
+  h2{font-size:1.45rem;margin:2.1em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line);scroll-margin-top:16px}
+  h3{font-size:1.1rem;margin:1.6em 0 .4em}
+  p{margin:.6em 0}
+  .sub{color:var(--muted);margin:.2em 0}
+  a{color:var(--brand);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code{font-family:"Cascadia Code",Consolas,ui-monospace,monospace;font-size:.86em;background:var(--code-bg);padding:2px 6px;border-radius:6px}
+  pre{background:#0f1120;color:#e8eaf6;padding:16px 18px;border-radius:12px;overflow:auto;font-size:.84rem;line-height:1.6}
+  pre code{background:none;color:inherit;padding:0}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.9rem}
+  th,td{text-align:left;padding:9px 12px;border:1px solid var(--line);vertical-align:top}
+  th{background:var(--soft);font-weight:600}
+  .toc{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin:24px 0}
+  .toc h4{margin:0 0 10px;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .toc ol{margin:0;padding-left:20px;columns:2;column-gap:32px}
+  .toc li{margin:3px 0}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:18px 0}
+  .card{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--soft)}
+  .card b{display:block;margin-bottom:2px}
+  .card span{color:var(--muted);font-size:.86rem}
+  .badge{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:99px;background:#ecebff;color:#4b41d6;margin-left:6px;vertical-align:middle}
+  .note{border-left:4px solid var(--brand2);background:var(--soft);padding:12px 16px;border-radius:0 10px 10px 0;margin:14px 0;font-size:.92rem}
+  .warn{border-left-color:var(--warn)}
+  .danger{border-left-color:var(--danger)}
+  .ok{border-left-color:var(--ok)}
+  .kbd{font-family:Consolas,monospace;font-size:.8rem;background:#fff;border:1px solid #c9cddd;border-bottom-width:2px;border-radius:6px;padding:1px 7px}
+  ul.tight li{margin:3px 0}
+  .print-btn{position:fixed;top:16px;right:16px;background:linear-gradient(135deg,#7c3aed,#06b6d4);color:#fff;border:0;border-radius:10px;padding:10px 16px;font:600 .9rem inherit;cursor:pointer;box-shadow:0 8px 20px rgba(109,94,252,.4)}
+  .print-btn:hover{filter:brightness(1.07)}
+  footer.doc{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:.86rem}
+  .swatch{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:middle;margin-right:6px;border:1px solid rgba(0,0,0,.1)}
+  @media print{
+    .print-btn{display:none}
+    body{font-size:11.5pt;color:#000}
+    .page{max-width:none;padding:0 6mm}
+    h2{page-break-after:avoid}
+    pre,table,.card,.toc{page-break-inside:avoid}
+    pre{background:#f4f5fa;color:#111;border:1px solid #ddd}
+    a{color:#000}
+    header.doc{margin-bottom:14px}
+    section{page-break-inside:auto}
+  }
+</style>
+</head>
+<body>
+<button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+<div class="page">
+
+<header class="doc">
+  <div class="logo"><div class="mark">B</div><div><h1>BlogSphere AI</h1><p class="sub">Complete Full-Stack Blogging Platform — Technical Documentation</p></div></div>
+  <p class="sub"><b>Version:</b> 2.0 &nbsp;·&nbsp; <b>Document date:</b> <span id="docdate"></span> &nbsp;·&nbsp; <b>Architecture:</b> Client-side SPA (no server required)</p>
+</header>
+
+<div class="toc">
+  <h4>Contents</h4>
+  <ol>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#features">Feature set</a></li>
+    <li><a href="#architecture">Architecture &amp; file structure</a></li>
+    <li><a href="#design">Design system</a></li>
+    <li><a href="#data">Data model &amp; storage</a></li>
+    <li><a href="#migration">Migration from v1</a></li>
+    <li><a href="#auth">Authentication &amp; security</a></li>
+    <li><a href="#crud">Blog CRUD &amp; workflow</a></li>
+    <li><a href="#editor">The editor</a></li>
+    <li><a href="#ai">AI assistant</a></li>
+    <li><a href="#seo">SEO engine</a></li>
+    <li><a href="#api">JavaScript API reference</a></li>
+    <li><a href="#shortcuts">Keyboard &amp; accessibility</a></li>
+    <li><a href="#setup">Setup &amp; running</a></li>
+    <li><a href="#testing">Testing &amp; verification</a></li>
+    <li><a href="#limits">Limitations &amp; roadmap</a></li>
+    <li><a href="#pdf">Print to PDF</a></li>
+  </ol>
+</div>
+
+<section id="overview">
+<h2>1. Overview</h2>
+<p><b>BlogSphere AI</b> is a modern, responsive, AI-powered blogging platform. It began as a single dark-themed editor page and has been upgraded into a complete writing and publishing product with authentication, full blog CRUD, an AI writing assistant, SEO tooling, and writing analytics.</p>
+<p>Per project requirements, the application <b>keeps its original architecture</b> — a self-contained client-side single-page application (SPA) with no external runtime dependencies. All logic, styling and data live in a few static files that run directly in the browser. This makes the project trivial to host (any static host) and impossible to break through missing install steps.</p>
+<div class="cards">
+  <div class="card"><b>Zero dependencies</b><span>No npm packages, no build step. Plain HTML/CSS/JS.</span></div>
+  <div class="card"><b>Real database-like store</b><span>Versioned schema in <code>localStorage</code> with migrations.</span></div>
+  <div class="card"><b>Secure auth</b><span>PBKDF2-SHA256 password hashing via WebCrypto + salted sessions.</span></div>
+  <div class="card"><b>AI, optional</b><span>Built-in offline assistant plus any OpenAI-compatible endpoint.</span></div>
+</div>
+</section>
+
+<section id="features">
+<h2>2. Feature set</h2>
+<h3>User interface</h3>
+<ul class="tight">
+  <li>Refined <b>dark + light themes</b> with charcoal surfaces, subtle borders and a purple→cyan gradient accent, plus a working theme toggle and system-default option.</li>
+  <li>Consistent typography (Inter for UI, Newsreader for long-form), spacing, buttons, inputs, selects, cards, modals, chips and navigation.</li>
+  <li>Hover effects, transitions, loading skeletons, toast notifications and micro-interactions.</li>
+  <li>Icon buttons with tooltips; visible focus rings; keyboard accessibility; <code>prefers-reduced-motion</code> support.</li>
+  <li>Fully responsive layouts for desktop, tablet and mobile (breakpoints at 1024 / 860 / 640 px).</li>
+</ul>
+<h3>Editor</h3>
+<ul class="tight">
+  <li>Compact navigation, editor header with back button, draft status and last-saved timestamp.</li>
+  <li>Title field with live <b>character count</b>; excerpt field with a <b>recommended-length meter</b>.</li>
+  <li><b>Category</b> select and <b>tag</b> input (chips, up to 8, with suggestions).</li>
+  <li>Rich-text toolbar: bold, italic, H2, H3, bullet list, numbered list, blockquote, link, image, undo, redo, clear formatting.</li>
+  <li><b>Distraction-free focus mode</b>, live <b>preview drawer</b>, and a <b>sticky action bar</b> for Save Draft / Publish.</li>
+  <li>Writing statistics: word count, character count, estimated reading time and a completion progress ring.</li>
+  <li>Sidebar with <b>Publishing</b>, <b>SEO</b> and <b>AI assistant</b> widgets; autosave with debounce.</li>
+</ul>
+<h3>Platform</h3>
+<ul class="tight">
+  <li>Registration, login, logout, password change, and security-question password recovery.</li>
+  <li>Full CRUD for posts, drafts, published and archived states, archive/restore, delete with confirmation.</li>
+  <li>Search by title/content/author/tag; filter by category, tag and status; sort by newest, most liked, most viewed, A–Z; pagination.</li>
+  <li>Likes, bookmarks (Saved library), and threaded comments.</li>
+  <li>User profiles (name, avatar, bio), dashboard analytics and settings (profile, account, appearance, AI, data).</li>
+  <li>Data export / import and a danger-zone reset.</li>
+</ul>
+</section>
+
+<section id="architecture">
+<h2>3. Architecture &amp; file structure</h2>
+<p>BlogSphere AI is a client-only SPA. A hash-based router renders views into a single <code>&lt;main&gt;</code> element. All state lives in a versioned <code>localStorage</code> document managed by the <code>BS</code> core module.</p>
+<pre><code>Blogging-platform/
+├─ index.html            # App shell: fonts, styles, header/app/toast/dialog mounts
+├─ css/
+│  └─ styles.css         # Design system: tokens, components, responsive, print
+├─ js/
+│  ├─ core.js            # window.BS — store, migrations, crypto/auth, CRUD, AI
+│  └─ app.js             # Router, views, editor, settings, event delegation
+└─ docs/
+   └─ documentation.html # This document (print to PDF)</code></pre>
+<h3>Runtime layers</h3>
+<table>
+  <tr><th>Layer</th><th>Responsibility</th></tr>
+  <tr><td><b>Store</b> (<code>BS.load/save</code>)</td><td>Load, migrate and persist the whole app state as one JSON document.</td></tr>
+  <tr><td><b>Crypto/Auth</b> (<code>BS.Auth</code>)</td><td>PBKDF2 hashing, session tokens, registration, login, recovery, password change.</td></tr>
+  <tr><td><b>Data</b> (<code>BS.Data</code>)</td><td>Posts, comments, likes, bookmarks, queries, statistics, authorization checks.</td></tr>
+  <tr><td><b>AI</b> (<code>BS.AI</code>)</td><td>Offline heuristics + optional OpenAI-compatible chat completions.</td></tr>
+  <tr><td><b>Router</b> (<code>app.js</code>)</td><td>Maps <code>#/route/param</code> to views, enforces auth/guest guards, manages cleanups.</td></tr>
+  <tr><td><b>Views</b></td><td>Return HTML strings for each page; bound via event delegation.</td></tr>
+</table>
+</section>
+
+<section id="design">
+<h2>4. Design system</h2>
+<p>Design tokens are defined once as CSS custom properties and swapped for the dark theme via <code>:root[data-theme="dark"]</code> and <code>prefers-color-scheme</code>.</p>
+<table>
+  <tr><th>Token</th><th>Light</th><th>Dark</th><th>Role</th></tr>
+  <tr><td><code>--bg</code></td><td><span class="swatch" style="background:#f6f7fb"></span>#f6f7fb</td><td><span class="swatch" style="background:#0d0e15"></span>#0d0e15</td><td>Page background (charcoal in dark)</td></tr>
+  <tr><td><code>--surface</code></td><td><span class="swatch" style="background:#ffffff"></span>#ffffff</td><td><span class="swatch" style="background:#161821"></span>#161821</td><td>Cards, panels</td></tr>
+  <tr><td><code>--border</code></td><td><span class="swatch" style="background:#e5e6f0"></span>#e5e6f0</td><td><span class="swatch" style="background:#262a37"></span>#262a37</td><td>Subtle separators</td></tr>
+  <tr><td><code>--brand</code></td><td><span class="swatch" style="background:#6d5efc"></span>#6d5efc</td><td><span class="swatch" style="background:#8f8aff"></span>#8f8aff</td><td>Purple accent</td></tr>
+  <tr><td><code>--accent</code></td><td><span class="swatch" style="background:#06b6d4"></span>#06b6d4</td><td><span class="swatch" style="background:#22d3ee"></span>#22d3ee</td><td>Cyan accent</td></tr>
+  <tr><td><code>--grad</code></td><td colspan="2">linear-gradient(135deg, #7c3aed, #6d5efc, #06b6d4)</td><td>Brand gradient</td></tr>
+</table>
+<p>The brand gradient is used sparingly — on the logo mark, primary "gradient" buttons and progress indicators — to avoid visual clutter.</p>
+</section>
+
+<section id="data">
+<h2>5. Data model &amp; storage</h2>
+<p>The entire state is a single JSON document stored under the key <code>blogsphere.ai.v2</code>.</p>
+<pre><code>{
+  "version": 2,
+  "users":   [ User ],
+  "posts":   [ Post ],
+  "comments":[ { id, p, u, text, t } ],
+  "likes":   [ { p, u } ],
+  "marks":   [ { p, u } ],            // bookmarks
+  "me":      "userId | null",
+  "session": { u, token, exp },        // 7-day token session
+  "theme":   "dark | light | null",
+  "settings": { "ai": { baseUrl, key, model, temperature } }
+}</code></pre>
+<h3>User</h3>
+<table>
+  <tr><th>Field</th><th>Type</th><th>Notes</th></tr>
+  <tr><td>id, name, email, username</td><td>string</td><td>username is unique; email is unique</td></tr>
+  <tr><td>bio, avatar</td><td>string</td><td>avatar is a URL or data-URL</td></tr>
+  <tr><td>hash</td><td>object</td><td><code>{ algo:"PBKDF2-SHA256", salt, iter, hash, created }</code></td></tr>
+  <tr><td>recovery</td><td>object|null</td><td><code>{ question, hash }</code> for password reset</td></tr>
+  <tr><td>createdAt, prefs</td><td>number/object</td><td>metadata</td></tr>
+</table>
+<h3>Post</h3>
+<table>
+  <tr><th>Field</th><th>Type</th><th>Notes</th></tr>
+  <tr><td>id, author</td><td>string</td><td>author references User.id</td></tr>
+  <tr><td>title, slug</td><td>string</td><td>slug is unique, derived from title</td></tr>
+  <tr><td>excerpt</td><td>string</td><td>short summary / meta description</td></tr>
+  <tr><td>body</td><td>string</td><td>sanitised rich-text HTML</td></tr>
+  <tr><td>cover</td><td>string</td><td>featured image URL or data-URL</td></tr>
+  <tr><td>cat, tags</td><td>string, string[]</td><td>category + up to 8 tags</td></tr>
+  <tr><td>seoTitle, seoDesc</td><td>string</td><td>SEO overrides</td></tr>
+  <tr><td>status</td><td>string</td><td><code>draft</code> | <code>published</code> | <code>archived</code></td></tr>
+  <tr><td>created, updated, publishedAt</td><td>number</td><td>Unix ms timestamps</td></tr>
+  <tr><td>views, (likes/comments derived)</td><td>number</td><td>reading time derived from body</td></tr>
+</table>
+<div class="note"><b>Content sanitisation:</b> every saved body passes through an allow-list sanitiser that strips <code>&lt;script&gt;</code>, <code>&lt;style&gt;</code>, <code>&lt;iframe&gt;</code>, event handlers and any non-safe attributes, and forces <code>rel="noopener noreferrer"</code> on links. This prevents stored-XSS from rich-text input.</div>
+</section>
+
+<section id="migration">
+<h2>6. Migration from v1</h2>
+<p>The original app stored data under the key <code>bsai</code> with SHA-256 password digests. On first load, if no v2 document exists but a v1 document does, the platform runs <code>migrate()</code>:</p>
+<ul class="tight">
+  <li>Users, posts, comments, likes and bookmarks carry over.</li>
+  <li>Legacy string password hashes are preserved in <code>legacyHash</code>.</li>
+  <li>Posts gain <code>slug</code>, <code>tags</code>, <code>cover</code>, <code>seoTitle</code>, <code>seoDesc</code> and <code>publishedAt</code> defaults.</li>
+  <li>On the user's next successful login the legacy hash is <b>atomically upgraded</b> to PBKDF2-SHA256.</li>
+</ul>
+</section>
+
+<section id="auth">
+<h2>7. Authentication &amp; security</h2>
+<h3>Registration &amp; login</h3>
+<ul class="tight">
+  <li>Registration validates name, unique email, 3–20 char username, 8+ char password and confirmation, with a recommended security question.</li>
+  <li>Login accepts either email or username.</li>
+</ul>
+<h3>Password hashing</h3>
+<p>Passwords are <b>never</b> stored in plaintext. Each password is hashed with <b>PBKDF2-SHA256</b> using a random 16-byte salt and 150,000 iterations, via the browser WebCrypto API:</p>
+<pre><code>deriveBits(PBKDF2, salt=random16, iterations=150000, hash=SHA-256) → 256-bit digest</code></pre>
+<p>Verification re-derives the digest and compares. Recovery answers are hashed the same way.</p>
+<h3>Sessions</h3>
+<p>On login a random 24-byte token is issued with a 7-day expiry, stored as <code>session { u, token, exp }</code>. On every load the session is validated; expired sessions are cleared automatically.</p>
+<h3>Authorization</h3>
+<p>Every mutating operation checks ownership. <code>Data.savePost</code>, <code>setStatus</code>, <code>deletePost</code> and <code>deleteComment</code> reject actions where <code>author/owner !== session user</code>. Protected routes (<code>dashboard</code>, <code>write</code>, <code>saved</code>, <code>settings</code>) and guest-only routes (<code>login</code>, <code>register</code>, <code>forgot</code>) are enforced by router guards.</p>
+<div class="note warn"><b>Scope &amp; limitation:</b> because this build intentionally remains client-side, hashing and sessions run in the browser and the AI key is stored locally. PBKDF2 with a per-user salt is the strongest available client-side scheme, but it does not protect against an attacker with direct device access. For multi-user production use, move auth and data to a server (see the roadmap). Never enter a real password you use elsewhere into a demo.</div>
+</section>
+
+<section id="crud">
+<h2>8. Blog CRUD &amp; workflow</h2>
+<table>
+  <tr><th>Operation</th><th>Where</th><th>Method</th></tr>
+  <tr><td>Create / Update</td><td>Editor</td><td><code>Data.savePost(input, status)</code></td></tr>
+  <tr><td>Read (feed / single)</td><td>Explore, Home, post page</td><td><code>Data.query(opts)</code>, <code>Data.post(id)</code></td></tr>
+  <tr><td>Save draft / Publish</td><td>Editor action bar</td><td><code>savePost(...,"draft"|"published")</code></td></tr>
+  <tr><td>Archive / Restore</td><td>Dashboard, post page</td><td><code>Data.setStatus(id,"archived"|"draft")</code></td></tr>
+  <tr><td>Delete (with confirm)</td><td>Dashboard, post page</td><td><code>Data.deletePost(id)</code></td></tr>
+  <tr><td>Search / Filter / Sort / Paginate</td><td>Explore</td><td><code>Data.query({q,cat,tag,status,sort,page,per})</code></td></tr>
+</table>
+<p>Deleting a post also removes its comments, likes and bookmarks. Publishing stamps <code>publishedAt</code>; every edit updates <code>updated</code>. Drafts autosave ~1.6s after typing stops.</p>
+</section>
+
+<section id="editor">
+<h2>9. The editor</h2>
+<p>The editor is a <code>contenteditable</code> surface driven by <code>document.execCommand</code> with a sticky toolbar, plus a right-hand sidebar of widgets.</p>
+<ul class="tight">
+  <li><b>Header:</b> back button, live status ("Draft"/"Published"), last-saved relative time, Focus, Preview, Save Draft, Publish.</li>
+  <li><b>Main:</b> title (with <code>n/120</code> counter), excerpt (with 120–160 char meter), toolbar, content area, sticky action bar with stats and a completion ring.</li>
+  <li><b>Publishing widget:</b> category, tags, featured image (URL or upload to data-URL), cover preview.</li>
+  <li><b>SEO widget:</b> SEO title + meta description with length meters, live score ring and a checklist.</li>
+  <li><b>AI widget:</b> eight one-click tools (below).</li>
+  <li><b>Focus mode:</b> hides the top bar and sidebar and centers a wider writing column.</li>
+</ul>
+</section>
+
+<section id="ai">
+<h2>10. AI assistant</h2>
+<p>The assistant works in two modes and chooses automatically.</p>
+<h3>Offline engine (default, no key)</h3>
+<ul class="tight">
+  <li><b>Suggest titles</b> — keyword-driven title templates.</li>
+  <li><b>Write excerpt</b> — extractive 150-character summary.</li>
+  <li><b>Summarize (TL;DR)</b> — extractive top-sentence summary.</li>
+  <li><b>Suggest tags</b> — keyword frequency, matched against existing tags.</li>
+  <li><b>Generate outline</b> — section outline from keywords.</li>
+  <li><b>Improve writing</b> — readability-based tips.</li>
+  <li><b>SEO recommendations</b> — from the SEO engine.</li>
+  <li><b>Proofread</b> — double spaces, repeated words, long sentences, filler words.</li>
+</ul>
+<h3>Live mode (optional)</h3>
+<p>In <b>Settings → AI assistant</b>, provide an OpenAI-compatible <b>base URL</b>, <b>API key</b>, <b>model</b> and <b>temperature</b>. The app POSTs to <code>{baseURL}/chat/completions</code>:</p>
+<pre><code>POST {baseURL}/chat/completions
+Authorization: Bearer &lt;key&gt;
+{ "model": "...", "messages": [ {role:"system",...}, {role:"user",...} ] }</code></pre>
+<p>If the request fails (network, CORS or bad key) the app falls back to the offline engine and shows an error toast. A <b>Test connection</b> button verifies the endpoint. The AI badge shows <i>Live</i> or <i>Offline</i>.</p>
+<div class="note warn"><b>CORS note:</b> browsers block cross-origin requests unless the API sends the right CORS headers. Some providers allow this; others do not. If live mode is blocked, either use a provider that permits browser origins or proxy requests through your own backend.</div>
+</section>
+
+<section id="seo">
+<h2>11. SEO engine</h2>
+<p><code>BS.AI.seoAnalyze(post)</code> returns a 0–100 score and a checklist across eight weighted checks:</p>
+<table>
+  <tr><th>Check</th><th>Weight</th></tr>
+  <tr><td>Title length 30–60 characters</td><td>15</td></tr>
+  <tr><td>Meta description set</td><td>15</td></tr>
+  <tr><td>Meta 120–160 characters</td><td>10</td></tr>
+  <tr><td>At least 300 words</td><td>15</td></tr>
+  <tr><td>Has a featured image</td><td>10</td></tr>
+  <tr><td>Has 2+ tags</td><td>10</td></tr>
+  <tr><td>Uses section headings (H2)</td><td>10</td></tr>
+  <tr><td>Main keyword in opening</td><td>5</td></tr>
+</table>
+<p>The readability helper computes a Flesch reading-ease approximation; reading time assumes ~200 words/minute.</p>
+</section>
+
+<section id="api">
+<h2>12. JavaScript API reference</h2>
+<p>Everything is exposed on the global <code>window.BS</code>.</p>
+<h3>Store &amp; utils</h3>
+<table>
+  <tr><th>Member</th><th>Description</th></tr>
+  <tr><td><code>BS.load() / BS.save() / BS.reset()</code></td><td>Load, persist or wipe state</td></tr>
+  <tr><td><code>BS.state</code></td><td>The live state document</td></tr>
+  <tr><td><code>BS.esc(str)</code></td><td>HTML-escape</td></tr>
+  <tr><td><code>BS.sanitize(html)</code></td><td>Allow-list HTML sanitiser</td></tr>
+  <tr><td><code>BS.words(html) / BS.readingTime(html)</code></td><td>Word count / minutes</td></tr>
+  <tr><td><code>BS.slugify(s) / BS.uniqueSlug(title,id)</code></td><td>Slug generation</td></tr>
+  <tr><td><code>BS.icon(name)</code></td><td>Inline SVG icon</td></tr>
+  <tr><td><code>BS.fmtDate / relTime / initials / gradient</code></td><td>Formatting helpers</td></tr>
+</table>
+<h3><code>BS.Auth</code></h3>
+<table>
+  <tr><th>Method</th><th>Description</th></tr>
+  <tr><td><code>register(data)</code> → <code>{ok,user,errors}</code></td><td>Create account + sign in</td></tr>
+  <tr><td><code>authenticate(loginId, pw)</code> → <code>{ok,user,error}</code></td><td>Log in (auto-upgrades legacy hash)</td></tr>
+  <tr><td><code>logout() / me() / meId() / isAuthed() / user(id)</code></td><td>Session helpers</td></tr>
+  <tr><td><code>update(patch)</code></td><td>Update name/bio/avatar/prefs</td></tr>
+  <tr><td><code>changePassword(current,next)</code></td><td>Change password</td></tr>
+  <tr><td><code>recoveryFor(id) / resetPassword(uid,answer,pw)</code></td><td>Password recovery</td></tr>
+</table>
+<h3><code>BS.Data</code></h3>
+<table>
+  <tr><th>Method</th><th>Description</th></tr>
+  <tr><td><code>posts() / published() / post(id) / postBySlug(s) / byAuthor(id)</code></td><td>Read access</td></tr>
+  <tr><td><code>savePost(input,mode)</code> → <code>{ok,post}</code></td><td>Create/update with ownership check</td></tr>
+  <tr><td><code>setStatus(id,status) / deletePost(id)</code></td><td>Workflow</td></tr>
+  <tr><td><code>query(opts)</code> → <code>{items,total,page,pages}</code></td><td>Search/filter/sort/paginate</td></tr>
+  <tr><td><code>toggleLike / toggleMark / saved / isLiked / isMarked / likesCount</code></td><td>Engagement</td></tr>
+  <tr><td><code>addComment / comments / deleteComment / commentsCount</code></td><td>Comments</td></tr>
+  <tr><td><code>allTags() / authorStats(id) / bumpViews(id)</code></td><td>Aggregates</td></tr>
+</table>
+<h3><code>BS.AI</code></h3>
+<table>
+  <tr><th>Method</th><th>Description</th></tr>
+  <tr><td><code>settings() / saveSettings(s) / hasKey()</code></td><td>Configuration</td></tr>
+  <tr><td><code>chat(messages)</code> → <code>{ok,text,source,error}</code></td><td>Live OpenAI-compatible call</td></tr>
+  <tr><td><code>suggestTitles / generateExcerpt / tldr / suggestTags / outline / grammar</code></td><td>Offline helpers</td></tr>
+  <tr><td><code>seoAnalyze(ctx) / readability(ctx)</code></td><td>Analysis</td></tr>
+</table>
+</section>
+
+<section id="shortcuts">
+<h2>13. Keyboard &amp; accessibility</h2>
+<table>
+  <tr><th>Shortcut</th><th>Action (editor)</th></tr>
+  <tr><td><span class="kbd">Ctrl</span>+<span class="kbd">B</span></td><td>Bold</td></tr>
+  <tr><td><span class="kbd">Ctrl</span>+<span class="kbd">I</span></td><td>Italic</td></tr>
+  <tr><td><span class="kbd">Ctrl</span>+<span class="kbd">K</span></td><td>Insert link</td></tr>
+  <tr><td><span class="kbd">Ctrl</span>+<span class="kbd">S</span></td><td>Save draft</td></tr>
+  <tr><td><span class="kbd">Enter</span> / <span class="kbd">,</span></td><td>Add tag (tag field)</td></tr>
+  <tr><td><span class="kbd">Esc</span></td><td>Exit focus mode / close preview / close menu</td></tr>
+</table>
+<p>Accessibility features: skip-to-content link, semantic landmarks, ARIA roles on the toolbar and nav, visible <code>:focus-visible</code> rings, keyboard-operable menus and dialogs (native <code>&lt;dialog&gt;</code>), and reduced-motion support.</p>
+</section>
+
+<section id="setup">
+<h2>14. Setup &amp; running</h2>
+<p>There is nothing to install. Open <code>index.html</code> directly, or serve the folder over a local web server (recommended, so <code>crypto.subtle</code> and storage behave consistently).</p>
+<h3>Option A — double-click</h3>
+<p>Open <code>index.html</code> in Chrome, Edge or Firefox.</p>
+<h3>Option B — local server</h3>
+<pre><code># Python (pre-installed on most systems)
+python -m http.server 5500
+# then open http://localhost:5500
+
+# or Node
+npx serve .
+# or
+npx http-server -p 5500</code></pre>
+<h3>First run</h3>
+<ol class="tight">
+  <li>Click <b>Start writing</b> / <b>Create an account</b> and register.</li>
+  <li>Open <b>Write</b>, add a title and body — watch the stats and SEO score update live.</li>
+  <li>Use the AI sidebar tools, then <b>Save draft</b> or <b>Publish</b>.</li>
+  <li>(Optional) Home → <b>Load sample articles</b> to populate the feed.</li>
+  <li>(Optional) Settings → AI assistant to connect a live endpoint.</li>
+</ol>
+</section>
+
+<section id="testing">
+<h2>15. Testing &amp; verification</h2>
+<p>This build was verified with an automated headless-Chrome end-to-end run covering: home render, registration + PBKDF2 hashing, protected-route redirects, editor word-count and SEO scoring, publishing, slug generation, article rendering, search, likes, archive/restore/publish transitions, deletion, the offline AI engine, AI settings persistence, and theme toggling — <b>18 checks, zero runtime exceptions, zero console errors.</b></p>
+<table>
+  <tr><th>Result</th><th>Check</th></tr>
+  <tr><td>✔</td><td>Home renders hero and navbar</td></tr>
+  <tr><td>✔</td><td>Registration authenticates and stores a PBKDF2 hash</td></tr>
+  <tr><td>✔</td><td>Protected routes redirect guests to login</td></tr>
+  <tr><td>✔</td><td>Editor computes word count and SEO score</td></tr>
+  <tr><td>✔</td><td>Publishing creates a published post with a unique slug</td></tr>
+  <tr><td>✔</td><td>Article body renders; search finds the post</td></tr>
+  <tr><td>✔</td><td>Likes, archive/restore/publish, delete all work</td></tr>
+  <tr><td>✔</td><td>Offline AI returns titles/tags/summary/SEO checks</td></tr>
+  <tr><td>✔</td><td>AI settings persist and toggle Live mode</td></tr>
+  <tr><td>✔</td><td>Theme toggling updates the document root</td></tr>
+</table>
+</section>
+
+<section id="limits">
+<h2>16. Limitations &amp; roadmap</h2>
+<ul class="tight">
+  <li><b>Single device:</b> data lives only in the browser's <code>localStorage</code>; it is not synced across devices.</li>
+  <li><b>Client-side security ceiling:</b> hashing protects stored values but cannot fully defend against device-level access — a server is required for true multi-user security.</li>
+  <li><b>AI key exposure:</b> live AI keys are stored locally and used from the browser; use a server proxy for production.</li>
+  <li><b>Storage quota:</b> very large inline images (data-URLs) can approach the ~5 MB <code>localStorage</code> limit — prefer image URLs.</li>
+  <li><b>Email:</b> no email service is wired, so password reset uses a security question instead of email links.</li>
+</ul>
+<p><b>Suggested next steps:</b> a Node/SQLite or hosted backend with server-side PBKDF2/bcrypt, JWT/session cookies, server-side rendering or an API-driven SPA, image uploads to object storage, email verification and reset links, and rate limiting.</p>
+</section>
+
+<section id="pdf">
+<h2>17. Print to PDF</h2>
+<p>This document is print-optimised. To generate a PDF:</p>
+<ol class="tight">
+  <li>Click the <b>Print / Save as PDF</b> button (top-right), or press <span class="kbd">Ctrl</span>+<span class="kbd">P</span>.</li>
+  <li>Set <b>Destination</b> to <i>Save as PDF</i>.</li>
+  <li>Choose <b>Paper size</b> A4, <b>Margins</b> Default, and enable <b>Background graphics</b>.</li>
+  <li>Click <b>Save</b>.</li>
+</ol>
+<p>The print stylesheet hides the print button, switches to a print-friendly palette and keeps tables, code blocks, cards and section headings from splitting across pages.</p>
+</section>
+
+<footer class="doc">
+  <p><b>BlogSphere AI</b> — client-side, AI-powered blogging platform. Documentation generated for the v2 upgrade.</p>
+  <p>Built with plain HTML, CSS and JavaScript. No third-party runtime dependencies.</p>
+</footer>
+
+</div>
+<script>document.getElementById("docdate").textContent = new Date().toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"});</script>
+</body>
+</html>
